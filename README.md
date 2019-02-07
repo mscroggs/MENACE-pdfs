@@ -1,6 +1,6 @@
 MENACE pdfs
 ===========
-The code contained in this repository creates pdfs with the positions required to build a (MENACE)[http://mscroggs.co.uk/blog/19].
+The code contained in this repository creates pdfs with the positions required to build a [MENACE](http://mscroggs.co.uk/blog/19).
 
 In order you run this code, you must have `pdflatex` installed.
 
