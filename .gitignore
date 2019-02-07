@@ -1,6 +1,8 @@
+*.pyc
 *.tex
 *.pdf
 *.aux
 *.log
 .*.swp
 *.csv
+!output/*.pdf

@@ -62,6 +62,6 @@ for i,boards in enumerate(positions):
         latex += "\n"
     latex += postamb
     print(latex)
-    with open("boxes"+str(i)+".tex","w") as f:
+    with open("output/boxes"+str(i)+".tex","w") as f:
         f.write(latex)
-    os.system("pdflatex boxes"+str(i)+".tex")
+    os.system("pdflatex -output-directory output output/boxes"+str(i)+".tex")
