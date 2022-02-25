@@ -1,67 +1,54 @@
-from itertools import permutations
-
-from menace import Board
-
-positions = [[Board()],[],[],[]]
-
-for o1 in range(9):
-    for x1 in range(9):
-        if x1 not in [o1]:
-            board = Board()
-            board[o1] = 1
-            board[x1] = 2
-            if board.is_max() and not board.in_set(positions[1]):
-                positions[1].append(board)
-                #print "--"
-                #print board
-
-            for o2 in range(o1):
-                if o2 not in [o1,x1]:
-                    for x2 in range(x1):
-                        if x2 not in [o1,x1,o2]:
-                            board = Board()
-                            board[o1] = 1
-                            board[x1] = 2
-                            board[o2] = 1
-                            board[x2] = 2
-                            if board.is_max() and not board.in_set(positions[2]):
-                                positions[2].append(board)
-                                #print "--"
-                                #print board
-
-                            for o3 in range(o1):
-                                if o3 not in [o1,x1,o2,x2]:
-                                    for x3 in range(x1):
-                                        if x3 not in [o1,x1,o2,x2,o3]:
-                                            board = Board()
-                                            board[o1] = 1
-                                            board[x1] = 2
-                                            board[o2] = 1
-                                            board[x2] = 2
-                                            board[o3] = 1
-                                            board[x3] = 2
-                                            if board.has_winner():
-                                                break
-                                            if board.is_max() and not board.in_set(positions[3]):
-                                                positions[3].append(board)
-
-
-print("==")
-print([len(p) for p in positions])
-print(sum([len(p) for p in positions]))
-print("==")
-
-preamb = "\\documentclass{article}\n\\usepackage{tikz}\n\\begin{document}\n\\noindent\n"
-postamb = "\\end{document}"
-
 import os
-for i,boards in enumerate(positions):
+from itertools import permutations
+from menace import Board
+from latex import preamb, postamb
+
+positions = [[Board()], [], [], []]
+
+for o1, x1 in permutations(range(9), 2):
+    board = Board()
+    board[o1] = 1
+    board[x1] = 2
+    if board.is_max() and not board.in_set(positions[1]):
+        positions[1].append(board)
+
+for o1, x1, o2, x2 in permutations(range(9), 4):
+    board = Board()
+    board[o1] = 1
+    board[x1] = 2
+    board[o2] = 1
+    board[x2] = 2
+    if board.is_max() and not board.in_set(positions[2]):
+        positions[2].append(board)
+
+for o1, x1, o2, x2, o3, x3 in permutations(range(9), 6):
+    board = Board()
+    board[o1] = 1
+    board[x1] = 2
+    board[o2] = 1
+    board[x2] = 2
+    board[o3] = 1
+    board[x3] = 2
+    if board.has_winner():
+        continue
+    if board.is_max() and not board.in_set(positions[3]):
+        positions[3].append(board)
+
+
+assert len(positions[0]) == 1
+assert len(positions[1]) == 12
+assert sum([len(p) for p in positions]) == 304
+
+for i, boards in enumerate(positions):
     latex = preamb
-    for board in boards:
+    for j, board in enumerate(boards):
         latex += board.as_latex()
         latex += "\n"
+        if (j + 1) % 5 == 0:
+            latex += "\n\\noindent"
     latex += postamb
     print(latex)
-    with open("output/boxes"+str(i)+".tex","w") as f:
+    with open(f"output/boxes{i}.tex", "w") as f:
         f.write(latex)
-    os.system("pdflatex -output-directory output output/boxes"+str(i)+".tex")
+    assert os.system(
+        f"pdflatex -output-directory output output/boxes{i}.tex") == 0
