@@ -39,13 +39,15 @@ assert len(positions[0]) == 1
 assert len(positions[1]) == 12
 assert sum([len(p) for p in positions]) == 304
 
+index = 1
 for i, boards in enumerate(positions):
     latex = preamb
     for j, board in enumerate(boards):
-        latex += board.as_latex()
+        latex += board.as_latex(index=index)
         latex += "\n"
         if (j + 1) % 5 == 0:
             latex += "\n\\noindent"
+        index += 1
     latex += postamb
     print(latex)
     with open(f"output/boxes{i}.tex", "w") as f:

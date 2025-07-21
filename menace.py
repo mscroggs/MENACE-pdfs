@@ -53,7 +53,7 @@ class Board:
             out += 3 ** i * self[rot[i]]
         return out
 
-    def as_latex(self):
+    def as_latex(self, index=None):
         out = "\\begin{tikzpicture}\n"
         out += "\\clip (3.75mm,-1mm) rectangle (40.25mm,25mm);\n"
         out += "\\draw[gray] (5mm,5mm) -- (39mm,5mm);\n"
@@ -80,6 +80,9 @@ class Board:
                         f" -- ({c[0]+3}mm,{c[1]+3}mm);\n"
                         f"\\draw ({c[0]+1}mm,{c[1]+3}mm)"
                         f" -- ({c[0]+3}mm,{c[1]+1}mm);\n")
+        if index is not None:
+            # Add index at bottom-right corner
+            out += f"\\node[anchor=south east, font=\\small] at (39mm,6mm) {{{{ {index} }}}};\n"
 
         out += "\\end{tikzpicture}"
         return out
