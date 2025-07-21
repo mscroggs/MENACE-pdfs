@@ -13,7 +13,8 @@ parser.add_argument(
     help="Destination of pdf files.",
 )
 parser.add_argument(
-    "--with-indices", action="store_true", help="Include index numbers on boxes."
+    "--with-indices", action="store_true",
+        help="Include index numbers on boxes."
 )
 
 args = parser.parse_args()
