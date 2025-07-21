@@ -14,7 +14,7 @@ parser.add_argument(
 )
 parser.add_argument(
     "--with-indices", action="store_true",
-        help="Include index numbers on boxes."
+    help="Include index numbers on boxes."
 )
 
 args = parser.parse_args()
