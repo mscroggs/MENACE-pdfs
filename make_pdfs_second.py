@@ -1,7 +1,31 @@
+import argparse
 import os
 from itertools import permutations
 from menace import Board
 from latex import preamb, postamb
+
+parser = argparse.ArgumentParser(description="Make MENACE pdfs")
+parser.add_argument(
+    "destination",
+    metavar="destination",
+    nargs="?",
+    default=None,
+    help="Destination of pdf files.",
+)
+parser.add_argument(
+    "--with-indices", action="store_true", help="Include index numbers on boxes."
+)
+
+args = parser.parse_args()
+include_indices = args.with_indices
+if include_indices:
+    dir = "output-with-indices"
+else:
+    dir = "output-no-indices"
+if args.destination is not None:
+    while dir.endswith("/"):
+        dir = dir[:-1]
+    dir = args.destination
 
 positions = [[], [], [], []]
 
@@ -54,13 +78,16 @@ index = 1
 for i, boards in enumerate(positions):
     latex = preamb
     for j, board in enumerate(boards):
-        latex += board.as_latex(index=index)
+        if include_indices:
+            latex += board.as_latex(index=index)
+        else:
+            latex += board.as_latex()
         latex += "\n"
         if (j + 1) % 5 == 0:
             latex += "\n\\noindent"
         index += 1
     latex += postamb
-    with open(f"output/second_boxes{i}.tex", "w") as f:
+    with open(f"{dir}/second_boxes{i}.tex", "w") as f:
         f.write(latex)
     assert os.system(
-        f"pdflatex -output-directory output output/second_boxes{i}.tex") == 0
+        f"pdflatex -output-directory {dir} {dir}/second_boxes{i}.tex") == 0

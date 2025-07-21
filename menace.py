@@ -54,17 +54,16 @@ class Board:
         return out
 
     def as_latex(self, index=None):
-        out = "\\begin{tikzpicture}\n"
-        out += "\\clip (3.75mm,-1mm) rectangle (40.25mm,25mm);\n"
-        out += "\\draw[gray] (5mm,5mm) -- (39mm,5mm);\n"
-        out += "\\draw[gray] (5mm,19mm) -- (39mm,19mm);\n"
-        out += "\\draw[gray] (5mm,0mm) -- (5mm,24mm);\n"
-        out += "\\draw[gray] (39mm,0mm) -- (39mm,24mm);\n"
-
-        out += "\\draw (16mm,10mm) -- (28mm,10mm);\n"
-        out += "\\draw (16mm,14mm) -- (28mm,14mm);\n"
-        out += "\\draw (20mm,6mm) -- (20mm,18mm);\n"
-        out += "\\draw (24mm,6mm) -- (24mm,18mm);\n"
+        out = ("\\begin{tikzpicture}\n"
+               "\\clip (3.75mm,-1mm) rectangle (40.25mm,25mm);\n"
+               "\\draw[gray] (5mm,5mm) -- (39mm,5mm);\n"
+               "\\draw[gray] (5mm,19mm) -- (39mm,19mm);\n"
+               "\\draw[gray] (5mm,0mm) -- (5mm,24mm);\n"
+               "\\draw[gray] (39mm,0mm) -- (39mm,24mm);\n"
+               "\\draw (16mm,10mm) -- (28mm,10mm);\n"
+               "\\draw (16mm,14mm) -- (28mm,14mm);\n"
+               "\\draw (20mm,6mm) -- (20mm,18mm);\n"
+               "\\draw (24mm,6mm) -- (24mm,18mm);\n")
 
         for i, c in enumerate([
             (16, 6), (20, 6), (24, 6),
@@ -82,7 +81,10 @@ class Board:
                         f" -- ({c[0]+3}mm,{c[1]+1}mm);\n")
         if index is not None:
             # Add index at bottom-right corner
-            out += f"\\node[anchor=south east, font=\\small] at (39mm,6mm) {{{{ {index} }}}};\n"
+            out += (
+                "\\node[anchor=south east, font=\\small] at (39mm,6mm) "
+                f"{{{{ {index} }}}};\n"
+            )
 
         out += "\\end{tikzpicture}"
         return out
