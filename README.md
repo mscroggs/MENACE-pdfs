@@ -5,8 +5,10 @@ The code contained in this repository creates pdfs with the positions required t
 In order you run this code, you must have `pdflatex` installed.
 
 The file `make_pdfs.py` makes boxes for a MENACE that plays first. The file `make_pdfs_second.py` makes boxes for a MENACE that plays second.
+When running, the `--with-indices` flag can be passed to include an index number on the front of each box.
 
-The folder `output` contains the pdfs made by these two scripts.
+The folder `output-no-indices` contains the pdfs made by these two scripts.
+The folder `output-with-indices` contains the pdfs made by these two scripts with the `--with-indices` option used.
 
 Other games
 -----------

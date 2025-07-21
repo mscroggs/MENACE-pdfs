@@ -5,4 +5,4 @@
 *.log
 .*.swp
 *.csv
-!output/*.pdf
+!output*/*.pdf
